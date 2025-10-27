@@ -8,7 +8,16 @@ export class AccountService {
   constructor(private store: InMemoryEventStore, private initialBalance: number = 1000) {}
 
   withdraw(command: WithdrawMoneyCommand): AccountEvent {
+    if (!command) {
+      throw new Error('Command is required');
+    }
     const { accountId, amount } = command;
+    if (!accountId || typeof accountId !== 'string') {
+      throw new Error('accountId is required and must be a string');
+    }
+    if (amount === undefined || typeof amount !== 'number') {
+      throw new Error('amount is required and must be a number');
+    }
 
     if (amount <= 0) {
       const invalidEvent: InvalidWithdrawalEvent = {
