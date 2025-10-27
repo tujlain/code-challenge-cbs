@@ -30,7 +30,7 @@ describe('AccountService - Full Test Suite', () => {
     service = new AccountService(store, 1000);
   });
 
-  // 1️⃣ Basic functionality
+  // Basic functionality
   it('should withdraw money successfully', () => {
     const command: WithdrawMoneyCommand = { accountId: 'acc-1', amount: 200 };
     const event: AccountEvent = service.withdraw(command);
@@ -63,7 +63,7 @@ describe('AccountService - Full Test Suite', () => {
     expect((event as InvalidWithdrawalEvent).reason).toBe('Amount must be positive');
   });
 
-  // 2️⃣ Exact balance
+  // Exact balance
   it('should allow withdrawing entire balance', () => {
     const command: WithdrawMoneyCommand = { accountId: 'acc-4', amount: 1000 };
     const event: AccountEvent = service.withdraw(command);
@@ -72,7 +72,7 @@ describe('AccountService - Full Test Suite', () => {
     expect((event as MoneyWithdrawnEvent).balanceAfter).toBe(0);
   });
 
-  // 3️⃣ Multiple / recurring withdrawals
+  // Multiple / recurring withdrawals
   it('should compute balance correctly after multiple withdrawals', () => {
     const accountId = 'acc-5';
 
@@ -99,7 +99,7 @@ describe('AccountService - Full Test Suite', () => {
     expect((event as InsufficientFundsEvent).balance).toBe(300);
   });
 
-  // 4️⃣ Event store integrity
+  // Event store integrity
   it('should store all emitted events', () => {
     const accountId = 'acc-7';
     const commands: WithdrawMoneyCommand[] = [
